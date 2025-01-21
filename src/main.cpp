@@ -1,11 +1,18 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include <vector>
+#include <any>
+#include <utility>
 #include <sstream>
 #include <string>
 
+enum class TokenType;
+class Token;
+
 std::string read_file_contents(const std::string& filename);
-void error(int& line, std::string& where, std::string message);
+inline std::string token_type_to_string(TokenType type);
+inline std::string anyToString(const std::any& value);
 
 enum class TokenType {
     // Single-character tokens.
@@ -28,6 +35,29 @@ enum class TokenType {
     EOFILE
 };
 
+class Token {
+    const TokenType     type;
+    const std::string   lexeme;
+    const std::any      literal;
+    const int           line;
+
+    Token(TokenType type, std::string lexeme, std::any literal, int line)
+        : type(type),
+          lexeme(lexeme),
+          literal(literal),
+          line(line) {}
+    
+    std::string toString() const {
+        return tokenTypeToString(type) + " "
+        + lexeme + " " + anyToString(literal);
+    }
+};
+
+class Scanner {
+    private:
+        
+}
+
 int main(int argc, char *argv[]) {
     // Disable output buffering
     std::cout << std::unitbuf;
@@ -45,6 +75,7 @@ int main(int argc, char *argv[]) {
         
         if (!file_contents.empty()) {
             
+            TokenType::LEFT_PAREN
         }
         std::cout << "EOF  null" << std::endl;
         
@@ -69,3 +100,5 @@ std::string read_file_contents(const std::string& filename) {
 
     return buffer.str();
 }
+
+
