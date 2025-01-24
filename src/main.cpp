@@ -33,7 +33,7 @@ std::string read_file_contents(const std::string& filename);
     EOFILE
 }; */
 
-class Token {
+/*class Token {
     const TokenType     type;
     const std::string   lexeme;
     const std::any      literal;
