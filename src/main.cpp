@@ -75,10 +75,8 @@ int main(int argc, char *argv[]) {
         std::string file_contents = read_file_contents(argv[2]);
         
         if (!file_contents.empty()) {
-            // index for peeking
-            int index = 0;
-            for (auto c : file_contents) {
-                switch(c) {
+            for (int index = 0; index < file_contents.size(); ++index) {
+                switch(file_contents[index]) {
                     case '(':
                         std::cout << "LEFT_PAREN ( null" << std::endl;
                         break;
@@ -110,7 +108,7 @@ int main(int argc, char *argv[]) {
                         std::cout << "STAR * null" << std::endl;
                         break;
                     case '=':
-                        if (index < file_contents.size()) {
+                        if (index + 1 < file_contents.size()) {
                             if (file_contents[index+1] == '=') {
                                 std::cout << "EQUAL_EQUAL == null"
                                 << std::endl;
