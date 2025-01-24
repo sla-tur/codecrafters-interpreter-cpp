@@ -75,10 +75,10 @@ int main(int argc, char *argv[]) {
             for (auto c : file_contents) {
                 switch(c) {
                     case '(':
-                        std::cout << "LEFT PAREN ( null" << std::endl;
+                        std::cout << "LEFT_PAREN ( null" << std::endl;
                         break;
                     case ')':
-                        std::cout << "RIGHT PAREN ) null" << std::endl;
+                        std::cout << "RIGHT_PAREN ) null" << std::endl;
                         break;
                 }
             }
