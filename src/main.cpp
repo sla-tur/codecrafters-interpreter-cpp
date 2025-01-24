@@ -108,16 +108,25 @@ int main(int argc, char *argv[]) {
                         std::cout << "STAR * null" << std::endl;
                         break;
                     case '=':
-                        if (index + 1 < file_contents.size()) {
-                            if (file_contents[index+1] == '=') {
-                                std::cout << "EQUAL_EQUAL == null"
-                                << std::endl;
-                                ++index;
-                                break;
-                            }
+                        if (index + 1 < file_contents.size() 
+                        && file_contents[index+1 == '=']) {
+                            std::cout << "EQUAL_EQUAL == null" << std::endl;
+                            ++index;
+                            break;
+                        } else {
+                            std::cout << "EQUAL = null" << std::endl;
+                            break;
                         }
-                        std::cout << "EQUAL = null" << std::endl;
-                        break;
+                    case '!':
+                        if (index + 1 < file_contents.size() 
+                        && file_contents[index+1 == '=']) {
+                            std::cout << "BANG_EQUAL != null" << std::endl;
+                            ++index;
+                            break;
+                        } else {
+                            std::cout << "BANG ! null" << std::endl;
+                            break;
+                        }
                     default:
                         std::cerr << "[line 1] Error: Unexpected character: "
                             << file_contents[index] << std::endl;
