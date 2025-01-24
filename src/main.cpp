@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
                         break;
                     case '=':
                         if (index + 1 < file_contents.size() 
-                        && file_contents[index+1 == '=']) {
+                        && file_contents[index+1] == '=') {
                             std::cout << "EQUAL_EQUAL == null" << std::endl;
                             ++index;
                             break;
@@ -119,7 +119,7 @@ int main(int argc, char *argv[]) {
                         }
                     case '!':
                         if (index + 1 < file_contents.size() 
-                        && file_contents[index+1 == '=']) {
+                        && file_contents[index+1] == '=') {
                             std::cout << "BANG_EQUAL != null" << std::endl;
                             ++index;
                             break;
