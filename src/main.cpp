@@ -66,6 +66,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    bool had_error = false;
     const std::string command = argv[1];
 
     if (command == "tokenize") {
@@ -104,10 +105,19 @@ int main(int argc, char *argv[]) {
                     case '*':
                         std::cout << "STAR * null" << std::endl;
                         break;
+                    default:
+                        std::cout << "[line 1] Error: Unexpected character: "
+                            << c << std::endl;
+                        had_error = true;
+                        break;
                 }
             }
         }
         std::cout << "EOF  null" << std::endl;
+        if (had_error) {
+            std::exit(65);
+        }
+
         
     } else {
         std::cerr << "Unknown command: " << command << std::endl;
