@@ -118,6 +118,8 @@ int main(int argc, char *argv[]) {
                                 break;
                             }
                         }
+                        std::cout << "EQUAL = null" << std::endl;
+                        break;
                     default:
                         std::cerr << "[line 1] Error: Unexpected character: "
                             << c << std::endl;
