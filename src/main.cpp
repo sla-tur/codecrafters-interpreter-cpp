@@ -2,19 +2,17 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include <any>
-#include <utility>
 #include <sstream>
 #include <string>
 
-enum class TokenType;
-class Token;
+//enum class TokenType;
+//class Token;
 
 std::string read_file_contents(const std::string& filename);
-inline std::string token_type_to_string(TokenType type);
-inline std::string anyToString(const std::any& value);
+//inline std::string token_type_to_string(TokenType type);
+//inline std::string anyToString(const std::any& value);
 
-enum class TokenType {
+/* enum class TokenType {
     // Single-character tokens.
     LEFT_PAREN, RIGHT_PAREN, LEFT_BRACE, RIGHT_BRACE,
     COMMA, DOT, MINUS, PLUS, SEMICOLON, SLASH, STAR,
@@ -33,7 +31,7 @@ enum class TokenType {
     PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,
 
     EOFILE
-};
+}; */
 
 class Token {
     const TokenType     type;
@@ -53,10 +51,10 @@ class Token {
     }
 };
 
-class Scanner {
+/* class Scanner {
     private:
         
-}
+} */
 
 int main(int argc, char *argv[]) {
     // Disable output buffering
@@ -74,8 +72,16 @@ int main(int argc, char *argv[]) {
         std::string file_contents = read_file_contents(argv[2]);
         
         if (!file_contents.empty()) {
-            
-            TokenType::LEFT_PAREN
+            for (auto c : file_contents) {
+                switch(c) {
+                    case '(':
+                        std::cout << "LEFT PAREN ( null" << std::endl;
+                        break;
+                    case ')':
+                        std::cout << "RIGHT PAREN ) null" << std::endl;
+                        break;
+                }
+            }
         }
         std::cout << "EOF  null" << std::endl;
         
