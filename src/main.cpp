@@ -9,6 +9,8 @@
 //class Token;
 
 std::string read_file_contents(const std::string& filename);
+bool is_at_end();
+char advance();
 //inline std::string token_type_to_string(TokenType type);
 //inline std::string anyToString(const std::any& value);
 
@@ -74,9 +76,8 @@ int main(int argc, char *argv[]) {
         
         if (!file_contents.empty()) {
             // index for peeking
-            std::size_t index = 0;
+            int index = 0;
             for (auto c : file_contents) {
-                ++index;
                 switch(c) {
                     case '(':
                         std::cout << "LEFT_PAREN ( null" << std::endl;
@@ -110,20 +111,20 @@ int main(int argc, char *argv[]) {
                         break;
                     case '=':
                         if (index < file_contents.size()) {
-                            if (file_contents[index] == '=') {
+                            if (file_contents[index+1] == '=') {
                                 std::cout << "EQUAL_EQUAL == null"
                                 << std::endl;
+                                ++index;
                                 break;
                             }
                         }
-                        std::cout << "EQUAL = null" << std::endl;
-                        break;
                     default:
                         std::cerr << "[line 1] Error: Unexpected character: "
                             << c << std::endl;
                         had_error = true;
                         break;
                 }
+                ++index;
             }
         }
         std::cout << "EOF  null" << std::endl;
@@ -153,5 +154,3 @@ std::string read_file_contents(const std::string& filename) {
 
     return buffer.str();
 }
-
-
