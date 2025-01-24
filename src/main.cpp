@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
                         std::cout << "STAR * null" << std::endl;
                         break;
                     default:
-                        std::cout << "[line 1] Error: Unexpected character: "
+                        std::cerr << "[line 1] Error: Unexpected character: "
                             << c << std::endl;
                         had_error = true;
                         break;
