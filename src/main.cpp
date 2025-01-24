@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
         std::string file_contents = read_file_contents(argv[2]);
         
         if (!file_contents.empty()) {
-            for (int index = 0; index < file_contents.size(); ++index) {
+            for (std::size_t index = 0; index < file_contents.size(); ++index) {
                 switch(file_contents[index]) {
                     case '(':
                         std::cout << "LEFT_PAREN ( null" << std::endl;
@@ -120,7 +120,7 @@ int main(int argc, char *argv[]) {
                         break;
                     default:
                         std::cerr << "[line 1] Error: Unexpected character: "
-                            << c << std::endl;
+                            << file_contents[index] << std::endl;
                         had_error = true;
                         break;
                 }
