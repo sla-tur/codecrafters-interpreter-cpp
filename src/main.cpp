@@ -73,6 +73,7 @@ int main(int argc, char *argv[]) {
         std::string file_contents = read_file_contents(argv[2]);
         
         if (!file_contents.empty()) {
+            std::size_t index = 0;
             for (auto c : file_contents) {
                 switch(c) {
                     case '(':
@@ -104,6 +105,16 @@ int main(int argc, char *argv[]) {
                         break;
                     case '*':
                         std::cout << "STAR * null" << std::endl;
+                        break;
+                    case '=':
+                        if (index+1 < file_contents.size()) {
+                            if (file_contents[index+1] == '=') {
+                                std::cout << "EQUAL_EQUAL == null"
+                                << std::endl;
+                                break;
+                            }
+                        }
+                        std::cout << "EQUAL = null" << std::endl;
                         break;
                     default:
                         std::cerr << "[line 1] Error: Unexpected character: "
