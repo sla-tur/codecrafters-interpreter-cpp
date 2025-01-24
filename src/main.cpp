@@ -117,14 +117,24 @@ int main(int argc, char *argv[]) {
                             std::cout << "EQUAL = null" << std::endl;
                             break;
                         }
-                    case '!':
+                    case '>':
                         if (index + 1 < file_contents.size() 
                         && file_contents[index+1] == '=') {
-                            std::cout << "BANG_EQUAL != null" << std::endl;
+                            std::cout << "GREATER_EQUAL >= null" << std::endl;
                             ++index;
                             break;
                         } else {
-                            std::cout << "BANG ! null" << std::endl;
+                            std::cout << "GREATER > null" << std::endl;
+                            break;
+                        }
+                    case '<':
+                        if (index + 1 < file_contents.size() 
+                        && file_contents[index+1] == '=') {
+                            std::cout << "LESS_EQUAL <= null" << std::endl;
+                            ++index;
+                            break;
+                        } else {
+                            std::cout << "LESS < null" << std::endl;
                             break;
                         }
                     default:
