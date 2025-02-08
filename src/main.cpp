@@ -1,41 +1,62 @@
-#include <cstring>
-#include <fstream>
 #include <iostream>
-#include <vector>
-#include <sstream>
 #include <string>
+#include <vector>
+#include <cctype>
 
-//enum class TokenType;
-//class Token;
+// Define the different kinds of tokens our language supports.
+enum class TokenType {
+    // Single-character tokens.
+    LEFT_PAREN, RIGHT_PAREN, LEFT_BRACE, RIGHT_BRACE,
+    COMMA, DOT, MINUS, PLUS, SEMICOLON, SLASH, STAR,
+
+    // One or two character tokens.
+    BANG, BANG_EQUAL,
+    EQUAL, EQUAL_EQUAL,
+    GREATER, GREATER_EQUAL,
+    LESS, LESS_EQUAL,
+
+    // Literals.
+    IDENTIFIER, STRING, NUMBER,
+
+    // Keywords.
+    IF, ELSE, WHILE, FOR, RETURN, TRUE, FALSE,
+
+    // End-of-file.
+    END_OF_FILE
+};
 
 std::string read_file_contents(const std::string& filename);
 bool is_at_end();
 char advance();
-//inline std::string token_type_to_string(TokenType type);
-//inline std::string anyToString(const std::any& value);
 
-/*class Token {
-    const TokenType     type;
-    const std::string   lexeme;
-    const std::any      literal;
-    const int           line;
+struct Token {
+    TokenType     type;
+    std::string   lexeme;
+    std::string   literal;
+    int           line;
 
-    Token(TokenType type, std::string lexeme, std::any literal, int line)
-        : type(type),
-          lexeme(lexeme),
-          literal(literal),
-          line(line) {}
-    
-    std::string toString() const {
-        return tokenTypeToString(type) + " "
-        + lexeme + " " + anyToString(literal);
-    }
+    Token(TokenType type, const std::string& lexeme, const std::string& literal, int line)
+        : type(type), lexeme(lexeme), literal(literal), line(line) {}
 };
 
-/* class Scanner {
-    private:
-        
-} */
+class Scanner {
+public:
+    explicit Scanner(const std::string& source) : source(source) {}
+
+    std::vector<Token> scanTokens() {
+        while (!isAtEnd()) {
+            start = current;
+            scanToken();
+        }
+        tokens.push_back(Token(TokenType::END_OF_FILE, "", "", line));
+        return tokens;
+    }
+
+private:
+    const std::string source;
+    std::vector<Token> tokens;
+    int start = 0;
+    int current
 
 int main(int argc, char *argv[]) {
     // Disable output buffering
