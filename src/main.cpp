@@ -5,7 +5,10 @@
 #include <vector>
 #include <cctype>
 
+bool had_error = false;
 std::string read_file_contents(const std::string& filename);
+void error(int line, const std::string& message);
+void report(int line, const std::string& where, const std::string& message);
 
 // Define the different kinds of tokens our language supports
 enum class TokenType {
@@ -64,7 +67,6 @@ public:
 private:
     const std::string source;
     std::vector<Token> tokens;
-    // Position 
     int start = 0;
     int current = 0;
     int line = 1;
@@ -99,6 +101,16 @@ private:
                 addToken(match('=') ? TokenType::GREATER_EQUAL : TokenType::GREATER);
                 break;
 
+            // Two slashes make a comment in Lox: the scanner advances until
+            // it finds the line end
+            case '/':
+                if (match('/')) {
+                    while (peek() != '\n' && !isAtEnd()) advance();
+                }
+                else {
+                    addToken(TokenType::SLASH);
+                }
+                break;
 
             case ' ':
             case '\r':
@@ -121,7 +133,7 @@ private:
                     identifier();
                 }
                 else {
-                    std::cerr << "Unexpected character: " << c << " at line " << line << "\n";
+                    error(line, "Unexpected character");
                 }
                 break;
         }
@@ -240,7 +252,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    bool had_error = false;
     const std::string command = argv[1];
 
     if (command == "tokenize") {
@@ -250,15 +261,13 @@ int main(int argc, char *argv[]) {
             Scanner scanner(file_contents);
             std::vector<Token> tokens = scanner.scanTokens();
             for (const auto& token : tokens) {
-                std::cout << static_cast<int>(token.type) << " " 
+                std::cout << static_cast<int>(token.type) << " "
                     << token.lexeme << " " << token.literal << '\n';
             }
         }
-        std::cout << "EOF  null" << std::endl;
         if (had_error) {
             std::exit(65);
         }
-
         
     } else {
         std::cerr << "Unknown command: " << command << std::endl;
@@ -280,4 +289,13 @@ std::string read_file_contents(const std::string& filename) {
     file.close();
 
     return buffer.str();
+}
+
+void error(int line, const std::string& message) {
+    report(line, "", message);
+}
+
+void report(int line, const std::string& where, const std::string& message) {
+    std::cerr << "[line " << line << "] Error" << where << ": " << message << '\n';
+    had_error = true;
 }
