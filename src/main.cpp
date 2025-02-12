@@ -140,6 +140,9 @@ private:
     }
 
     // Returns the current character and advances the pointer
+    // Programming nuance: current++ executes the statement involving
+    // the incremented variable then increments
+    // ++current increments THEN executes
     char advance() {
         return source[current++];
     }
