@@ -4,7 +4,8 @@
 #include <string>
 #include <vector>
 #include <cctype>
-
+// Regular enum classes can't return the keyword the enum
+// associates with the integer value
 #include "magic_enum.hpp"
 
 bool had_error = false;
