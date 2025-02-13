@@ -5,6 +5,8 @@
 #include <vector>
 #include <cctype>
 
+#include "magic_enum.hpp"
+
 bool had_error = false;
 std::string read_file_contents(const std::string& filename);
 void error(int line, const std::string& message);
@@ -185,7 +187,7 @@ private:
         }
 
         if (isAtEnd()) {
-            std::cerr << "Unterminated string at line " << line << "\n";
+            error(line, "Unterminated string.");
             return;
         }
 
@@ -264,8 +266,16 @@ int main(int argc, char *argv[]) {
             Scanner scanner(file_contents);
             std::vector<Token> tokens = scanner.scanTokens();
             for (const auto& token : tokens) {
-                std::cout << static_cast<int>(token.type) << " "
-                    << token.lexeme << " " << token.literal << '\n';
+                if (magic_enum::enum_name(token.type) == "END_OF_FILE") {
+                    std::cout << "EOF" << " "
+                        << token.lexeme << " "
+                        << ((token.literal == "") ? "null" : token.literal) << '\n';
+                }
+                else {
+                    std::cout << magic_enum::enum_name(token.type) << " "
+                        << token.lexeme << " "
+                        << ((token.literal == "") ? "null" : token.literal) << '\n';
+                }
             }
         }
         if (had_error) {
